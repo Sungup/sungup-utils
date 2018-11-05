@@ -1,3 +1,3 @@
-# sungup-utils
+# Personal utility module
 
-Sungup's utility set
+Sungup's Utility Module.
