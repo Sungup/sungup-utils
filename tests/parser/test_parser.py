@@ -136,11 +136,22 @@ class TestSGLParserBase(ParserTestCase):
             else:
                 parser.add_argument_group(k, desc=self._gen_random_string())
 
-        # 2. Try add arguments using all values
+        # 2. Check reserved argument and group name 'config'
+        with self.assertRaises(SGLException) as err:
+            parser.add_argument_group('config')
+
+        self.assertEqual(err.exception.code, SGL_PARSER_DUPLICATED_NAME)
+
+        with self.assertRaises(SGLException) as err:
+            parser.add_argument('config')
+
+        self.assertEqual(err.exception.code, SGL_PARSER_DUPLICATED_NAME)
+
+        # 3. Try add arguments using all values
         self.__test_duplicated_name(test_case,
                                     lambda n, _: parser.add_argument(n))
 
-        # 3. Try add argument group using all values
+        # 4. Try add argument group using all values
         self.__test_duplicated_name(test_case,
                                     lambda n, _: parser.add_argument_group(n))
 
