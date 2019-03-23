@@ -38,11 +38,13 @@ class SGLException(Exception):
 
         return line_no, '.'.join(names)
 
-    def __init__(self, code, *args, **kwargs):
+    def __init__(self, code, desc=None, *args, **kwargs):
         line_no, caller = self.__caller_info()
 
+        message = '{} {}'.format(code.desc, desc) if desc else code.desc
+
         self.__code = code
-        self.__message = '{} ({}:L#{})'.format(code.desc, caller, line_no)
+        self.__message = '{} ({}:L#{})'.format(message, caller, line_no)
 
         super(self.__class__, self).__init__(self.__message, *args, **kwargs)
 
